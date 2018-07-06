@@ -5,13 +5,13 @@ class Solution {
 
         for(String word: words){
             boolean isOneLine = false;
-            if(word.toLowerCase().matches("[qwertyuiop]+")){
+            if(word.toLowerCase().matches("^[qwertyuiop]+$")){
                 isOneLine = true;
             }
-            if(word.toLowerCase().matches("[asdfghjkl]+")){
+            if(word.toLowerCase().matches("^[asdfghjkl]+$")){
                 isOneLine = true;
             }
-            if(word.toLowerCase().matches("[zxcvbnm]+")){
+            if(word.toLowerCase().matches("^[zxcvbnm]+$")){
                 isOneLine = true;
             }
             if(isOneLine){
