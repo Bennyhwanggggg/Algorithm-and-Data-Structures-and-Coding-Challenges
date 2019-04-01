@@ -20,3 +20,23 @@ class Solution(object):
                 dfs(child)
         dfs(root)
         return res
+
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val, children):
+        self.val = val
+        self.children = children
+"""
+class Solution:
+    def preorder(self, root: 'Node') -> List[int]:
+        self.result = []
+        self.traverse(root)
+        return self.result
+    
+    def traverse(self, node):
+        if not node:
+            return
+        self.result.append(node.val)
+        for child in node.children:
+            self.traverse(child)
