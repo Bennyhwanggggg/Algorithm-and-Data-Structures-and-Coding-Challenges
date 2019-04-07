@@ -8,7 +8,7 @@ with orientation `/`, and `n` mirrors with orientation `\`. This is illustrated
 below.
 
 <p float="left">
-  <img src="/figs/setup.png" width="640" />
+  <img src="./setup.png" width="640" />
 </p>
 
 When the laser is activated, a beam enters the top row of the grid horizontally from the left.
