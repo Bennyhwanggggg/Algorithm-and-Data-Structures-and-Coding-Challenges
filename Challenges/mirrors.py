@@ -1,6 +1,8 @@
 '''
 Python version: 3.6
 Author: Benny Hwang
+
+Problem description here: https://github.com/Bennyhwanggggg/Practices/blob/master/Challenges/mirrors.md
 '''
 
 import os, sys
