@@ -1,4 +1,27 @@
 """
+stack
+O(N) time and space
+"""
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val, children):
+        self.val = val
+        self.children = children
+"""
+class Solution:
+    def preorder(self, root: 'Node') -> List[int]:
+        if not root:
+            return []
+        stack = [root]
+        result = []
+        while stack:
+            node = stack.pop()
+            result.append(node.val)
+            stack.extend(node.children[::-1])
+        return result
+
+"""
 # Definition for a Node.
 class Node(object):
     def __init__(self, val, children):
