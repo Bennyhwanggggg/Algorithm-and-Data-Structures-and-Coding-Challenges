@@ -45,4 +45,43 @@ class Solution:
             bought = max(bought, dp[i][1])
             
         return max(dp[n-1])
-        
+
+
+"""
+Say you have an array for which the ith element is the price of a given stock on day i.
+
+Design an algorithm to find the maximum profit. You may complete as many transactions as you like (ie, buy one and sell one share of the stock multiple times) with the following restrictions:
+
+You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+After you sell your stock, you cannot buy stock on next day. (ie, cooldown 1 day)
+"""
+
+"""
+DP，we can create two array, buy and sell. buy[i] means we buy a stock at day i , and sell[i] means we sell a stock at day i.
+
+so, we have two equations :
+
+buy[i] = max(buy[i-1] , sell[i-2] - prices[i]) // So we should use sell[i-2] means we cooldown one day.
+sell[i] = max(sell[i-1],buy[i-1] + prices[i])
+finally, return the max(buy[n-1] , sell[n-1]) （it is obvious that sell[n-1] >= buy[n-1] ,so we return sell[n-1]）
+
+Time: O(n)
+Space: O(n)   You can do it in O(1) space, since i rely on only i-1 and i-2, but I think you know it
+"""
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        if len(prices) < 2:
+            return 0
+        n = len(prices)
+        buy, sell = [0]*n, [0]*n
+        buy[0] = -prices[0]
+        buy[1] = -min(prices[0], prices[1])
+        sell[1] = max(0, prices[1] - prices[0])
+        for i in range(2, n):
+            buy[i] = max(sell[i-2] - prices[i], buy[i-1])
+            sell[i] = max(buy[i - 1] + prices[i], sell[i - 1])
+        return sell[n-1]        
