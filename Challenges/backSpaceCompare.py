@@ -47,4 +47,46 @@ class Solution:
                 if current >= 0:
                     text[current] = ''
         return ''.join(text)
+
+
+class Solution(object):
+    def backspaceCompare(self, S, T):
+        s = []
+        t = []
+        for c in S:
+            if c == '#':
+                if s != []:
+                    s.pop()
+            else:
+                s.append(c)
+        for c in T:
+            if c == '#':
+                if t != []:
+                    t.pop()
+            else:
+                t.append(c)
+        return s == t
+
+class Solution(object):
+    def backspaceCompare(self, S, T):
+        """
+        :type S: str
+        :type T: str
+        :rtype: bool
+        """
+        return self.removeHashTags(S) == self.removeHashTags(T)
                 
+    def removeHashTags(self, s):
+        skip = 0
+        curr = ''
+        for x in reversed(s):
+            if x == '#':
+                skip += 1
+            elif skip:
+                skip -= 1
+            else:
+                curr += x
+        return curr
+        
+   
+                                    
