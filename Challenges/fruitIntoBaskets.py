@@ -41,3 +41,20 @@ class Solution(object):
                 i += 1
             res = max(res, j - i + 1)
         return res
+
+class Solution:
+    def totalFruit(self, tree: List[int]) -> int:
+        counts = dict()
+        res = 0
+        
+        start = 0
+        for end in range(len(tree)):
+            counts[tree[end]] = counts.get(tree[end], 0) + 1
+            while len(counts) > 2 and start < end:
+                counts[tree[start]] -= 1
+                if counts[tree[start]] == 0:
+                    del counts[tree[start]]
+                start += 1
+            res = max(res, end - start + 1)
+        return res
+                

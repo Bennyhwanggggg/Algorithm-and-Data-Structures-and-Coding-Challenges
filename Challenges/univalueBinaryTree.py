@@ -23,6 +23,35 @@ Each node's value will be an integer in the range [0, 99].
 #         self.left = None
 #         self.right = None
 
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def isUnivalTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        if not root:
+            return True
+        
+        stack = [root]
+        while stack:
+            curr = stack.pop()
+            if root.val != curr.val:
+                return False
+            if curr.left:
+                stack.append(curr.left)
+            if curr.right:
+                stack.append(curr.right)
+        
+        return True
+
+
 class Solution:
     def isUnivalTree(self, root: TreeNode) -> bool:
         if root is None:
