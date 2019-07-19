@@ -30,7 +30,7 @@ class Solution:
         if len(nums) < 3:
             return []
         res = set()
-        nums.sort()
+        nums.sort() # sort to avoid duplicates, unless order in result doesn't matter
         for i, val in enumerate(nums[:-2]):
             # get rid of duplicates
 	    if i >= 1 and val == nums[i-1]:
