@@ -46,4 +46,24 @@ class Solution:
         return res
         
         
-
+class Solution(object):
+    def rotatedDigits(self, N):
+        """
+        :type N: int
+        :rtype: int
+        """
+        counter = 0
+        
+        # digits that are valid after rotation
+        valid_digits = set([0,1,2,5,6,8,9])
+        # digits that are different after rotation
+        flip_different = set([2,5,6,9])
+        
+        # iterate thru numbers
+        for num in range(0,N+1):
+            digits = [int(i) for i in str(num)]
+            # to have a good number: 1) all digits have to be valid, 2) at least one digit is differnt after rotation
+            if (set(digits).issubset(valid_digits) and set(digits).intersection(flip_different)):
+                counter += 1
+        
+        return counter
