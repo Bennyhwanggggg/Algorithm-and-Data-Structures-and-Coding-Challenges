@@ -63,6 +63,28 @@ class Solution:
         
         return res if i == 0 else res + 1  # add 1 for partial source
     
+def shortestWay(self, source: str, target: str) -> int:
+    inverted_index = collections.defaultdict(list)
+    for i, ch in enumerate(source):
+        inverted_index[ch].append(i)
+
+    loop_cnt = 1
+    i = -1
+    for ch in target:
+        if ch not in inverted_index:
+            return -1
+        offset_list_for_ch = inverted_index[ch]
+        # bisect_left(A, x) returns the smallest index j s.t. A[j] >= x. If no such index j exists, it returns len(A).
+        j = bisect.bisect_left(offset_list_for_ch, i)
+        if j == len(offset_list_for_ch):
+            loop_cnt += 1
+            i = offset_list_for_ch[0] + 1
+        else:
+            i = offset_list_for_ch[j] + 1
+
+    return loop_cnt
+
+
 
 """
 DP
@@ -104,4 +126,43 @@ class Solution:
             i += move[i%m][ord(c)-ord('a')]
         return i//m + (i%m > 0)
         
+"""
+Greedy
+Time: O(MN)
+"""
+class Solution(object):
+    def shortestWay(self, source, target):
+        def match(st):#match source from st index of target
+            idx=0#idx of source
+            while idx<len(source) and st<n:
+                if source[idx]==target[st]:
+                    st+=1
+                    idx+=1
+                else:
+                    idx+=1
+            return st
+                
+        n=len(target)
+        source_set=set(source)
+        for ch in target:
+            if ch not in source_set:
+                return -1
+        #match one by one,match string until cannot match anymore.
+        st=0
+        count=0
+        while st<n:
+            st=match(st)
+            count+=1
+        return count
 
+class Solution:
+    def shortestWay(self, source: str, target: str) -> int:
+        def inc():
+            self.cnt += 1
+            return 0
+        self.cnt = i = 0
+        for t in target:
+            i = source.find(t, i) + 1 or source.find(t, inc()) + 1
+            if not i:
+                return -1
+        return self.cnt + 1
