@@ -46,6 +46,20 @@ class Solution(object):
                 right += 1
         return ans
 """
+
+# use i and j to indicate odd and even length`
+def countSubstrings(self, S):
+    for i in range(len(s)):
+        for j in range(2):
+            left = i
+            right = left + j
+
+            while left >= 0 and right < len(s) and S[left] == S[right]:
+                ans += 1
+                left -= 1
+                right += 1
+    return ans
+
 class Solution:
     def countSubstrings(self, s: str) -> int:
         count = 0
