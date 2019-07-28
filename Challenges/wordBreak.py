@@ -211,3 +211,39 @@ class Solution:
             for nextWord in words[currChr]:
                 queue.append((nextWord, currString))
         return False
+
+"""
+DFS with cache
+"""
+def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        wordDict = set(wordDict)
+        memo = {}
+        def DFS(s):
+            if not s:
+                return True
+            if s not in memo:
+                memo[s] = False
+                for i in range(1,len(s)+1):
+                    if s[:i] in wordDict:
+                        if DFS(s[i:]):
+                            memo[s] = True
+                            break
+                return memo[s]
+        return DFS(s)  
+
+"""
+Second solution: DP
+dp[i] is set to true if a valid word (word sequence) ends there.
+The optimization is to look from current position i back .
+if s[j:i] in wordDict and dp[j] == true , dp[i] == true .
+"""
+# dp
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        dp = [False]*(len(s)+1)
+        for i in range(1,len(s)+1):
+            for w in wordDict:
+                if (i-len(w)) > -1:
+                    if s[i-len(w):i] == w and (i-len(w) == 0 or dp[i-len(w)]):
+                        dp[i] = True
+                        break
+        return dp[-1]
