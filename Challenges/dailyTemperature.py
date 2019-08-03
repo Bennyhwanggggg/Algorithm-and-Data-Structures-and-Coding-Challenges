@@ -45,9 +45,9 @@ When i = 0, stack = [0 (73), 1 (74), 2 (75), 6 (76)]. ans[i] = 1.
 
 Complexity Analysis
 
-Time Complexity: O(N)O(N), where NN is the length of T and WW is the number of allowed values for T[i]. Each index gets pushed and popped at most once from the stack.
+Time Complexity: O(N), where NN is the length of T and WW is the number of allowed values for T[i]. Each index gets pushed and popped at most once from the stack.
 
-Space Complexity: O(W)O(W). The size of the stack is bounded as it represents strictly increasing temperatures.
+Space Complexity: O(W). The size of the stack is bounded as it represents strictly increasing temperatures.
 """
 class Solution:
     def dailyTemperatures(self, T: List[int]) -> List[int]:
