@@ -40,6 +40,44 @@ The height of a rooted tree is the number of edges on the longest downward path 
 """
 
 """
+Here is one insight for this problem: the root of MHT is the middle point of the longest path in the tree; hence there are at most two MHT roots.
+
+How to find them? We can BFS from the bottom (leaves) to the top until the last level with <=2 nodes. To build the current level from the previous level, we can monitor the degree of each node. If the node has degree of one, it will be added to the current level. Since it only check the edges once, the complexity is O(n).
+"""
+class Solution:
+    def findMinHeightTrees(self, n: int, edges: List[List[int]]) -> List[int]:
+
+        if n == 1: 
+            return [0]
+        neighbors = collections.defaultdict(list)
+        degrees = collections.defaultdict(int)
+        for u, v in edges:
+            neighbors[u].append(v)
+            neighbors[v].append(u)
+            degrees[u] += 1
+            degrees[v] += 1
+
+        # First find the leaves
+        preLevel, unvisited = [], set(range(n))
+        for i in range(n):
+            if degrees[i] == 1: 
+                preLevel.append(i)
+
+        while len(unvisited) > 2:
+            thisLevel = []
+            for u in preLevel:
+                unvisited.remove(u)
+                for v in neighbors[u]:
+                    if v in unvisited: 
+                        degrees[v] -= 1
+                        if degrees[v] == 1: 
+                            thisLevel.append(v)
+            preLevel = thisLevel
+
+        return preLevel
+
+
+"""
 Longest Path
 
 It is easy to see that the root of an MHT has to be the middle point (or two middle points) of the longest path of the tree.

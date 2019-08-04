@@ -49,7 +49,7 @@ class Solution:
     
 """
 Dijkstra using heap
-Time: O(N^2 + E) where E is the length of time and O(E log E) is the heap as potentially every edge is added to the heap
+Time: O((N+E)(log(E)) where E is the length of time and O(E log E) is the heap as potentially every edge is added to the heap
 Space: O(N+E), the size of the graph O(E) plus the size of the other objects used O(N)
 """
 class Solution(object):

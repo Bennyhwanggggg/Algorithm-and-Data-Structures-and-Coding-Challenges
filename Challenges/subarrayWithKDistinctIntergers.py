@@ -29,6 +29,29 @@ Note:
 """
 
 """
+If there is some comment, it could be better. I take the liberty to add some:
+This idea is to find the basic valid sub-array and find all its derived ones. If a valid sub-array A1 appears, code will push the right bound to reach its all derived sub-array (group) by checking the next number is in the dictionary or not; code will also cut number(s) from the left side, if the cutting does not change the validity, there is another group of sub-arrays (right_bound - current_index) exists.
+The good point is that the right bound will not back trace, also does the left bound. So the time complexity is O(N).
+"""
+class Solution(object):
+    def subarraysWithKDistinct(self, A, K):
+        s = collections.Counter() 
+        l = r = ans = 0 
+        for i,num in enumerate(A):
+            s[num] += 1
+            if s[num] == 1 and len(s) == K:
+                while r < len(A) and A[r] in s:
+                    r += 1 
+                while len(s) == K:
+                    ans += r-i 
+                    s[A[l]] -= 1 
+                    if s[A[l]] == 0: 
+			del s[A[l]] 
+                    l += 1 
+        return ans
+
+
+"""
 Time: O(N)
 Space: O(N)
 """
