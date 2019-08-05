@@ -41,4 +41,23 @@ class Solution:
         return -1
             
             
-
+class Solution:
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, K: int) -> int:
+        graph = collections.defaultdict(list)
+        for u, v, w in flights:
+            graph[u].append((w, v))
+        
+        pq = [(0, 0, src)]
+        visited = set()
+        while pq:
+            cost, stops, node = heapq.heappop(pq)
+            if node == dst:
+                return cost
+            if stops > K:
+                continue
+            visited.add(node)
+            for ticket_cost, nei in graph[node]:
+                if nei not in visited:
+                    heapq.heappush(pq, (cost+ticket_cost, stops+1, nei))
+        
+        return -1
