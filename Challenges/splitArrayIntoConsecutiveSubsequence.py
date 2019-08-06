@@ -50,7 +50,7 @@ Say we have a count of each number, and let tails[x] be the number of chains end
 
 Now let's process each number. If there's a chain ending before x, then add it to that chain. Otherwise, if we can start a new chain, do so.
 
-It's worth noting that our solution can be amended to take only O(1)O(1) additional space, since we could do our counts similar to Approach #1, and we only need to know the last 3 counts at a time.
+It's worth noting that our solution can be amended to take only O(1) additional space, since we could do our counts similar to Approach #1, and we only need to know the last 3 counts at a time.
 
 Time: O(N)
 Space: O(N)
@@ -72,6 +72,25 @@ class Solution:
             else:
                 return False
             count[x] -= 1
+        return True
+
+class Solution:
+    def isPossible(self, nums: List[int]) -> bool:
+        left = collections.Counter(nums)
+        end = collections.Counter()
+        for i in nums:
+            if not left[i]: 
+                continue
+            left[i] -= 1
+            if end[i - 1] > 0: # if we have a chain that ended at the number just before i
+                end[i - 1] -= 1
+                end[i] += 1
+            elif left[i + 1] and left[i + 2]: # start a new chain
+                left[i + 1] -= 1
+                left[i + 2] -= 1
+                end[i + 2] += 1
+            else:
+                return False
         return True
 
 # https://leetcode.com/discuss/interview-question/311895/Google-or-Phone-screen-or-Split-Array-into-Consecutive-Subsequences
