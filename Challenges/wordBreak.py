@@ -141,6 +141,28 @@ BFS
 Time: O(n^2) ?  For every starting index, the search can continue till the end of the given string.
 Space: O(n)
 """
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        
+        wordLengths = [len(word) for word in wordDict]
+        visited = [False for _ in range(len(s)+1)]
+        
+        queue = collections.deque([0])
+        
+        while queue:
+            start = queue.popleft()
+            for length in wordLengths:
+                if start + length > len(s):
+                    continue
+                if s[start:start+length] in wordDict:
+                    if start+length == len(s):
+                        return True
+                    if not visited[start+length]:
+                        visited[start+length] = True
+                        queue.append(start+length)
+        return False
+
+
 class Solution(object):
     def wordBreak(self, s, wordDict):
         """
