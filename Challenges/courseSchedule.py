@@ -116,3 +116,21 @@ class Solution:
 
         return res == 0
 
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        graph = collections.defaultdict(list)
+        indegree = collections.defaultdict(int)
+        for course, prereq in prerequisites:
+            graph[prereq].append(course)
+            indegree[course] = indegree.get(course, 0) + 1
+        
+        taken = set()
+        queue = collections.deque([course for course in range(numCourses) if indegree[course] == 0])
+        while queue:
+            course = queue.popleft()
+            taken.add(course)
+            for nei in graph[course]:
+                indegree[nei] -= 1
+                if indegree[nei] <= 0:
+                    queue.append(nei)
+        return len(taken) == numCourses
