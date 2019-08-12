@@ -32,7 +32,7 @@ TopVotedCandidate.q(int t) is always called with t >= times[0].
 """
 Precompute (winner, time) at each step
 
-Time Complexity: O(N+QlogN), where NN is the number of votes, and QQ is the number of queries.
+Time Complexity: O(N+QlogN), where N is the number of votes, and Q is the number of queries.
 
 Space Complexity: O(N). 
 """
