@@ -55,3 +55,32 @@ class Solution:
     def calculateDistance(self, x1, y1, x2, y2):
         return abs(x2-x1) + abs(y2-y1)
 
+# cleaner graph version
+class Solution:
+    def assignBikes(self, workers: List[List[int]], bikes: List[List[int]]) -> List[int]:
+        # create a graph of each worker and their distance to each bike, sort the array
+        # keep a set of used bikes
+        # start a search with each of their closest bike. If a bike is used, go to the graph
+        # and find the next one
+        
+        distances = collections.defaultdict(list)
+        for i, cord1 in enumerate(workers):
+            x1, y1 = cord1
+            for j, cord2 in enumerate(bikes):
+                x2, y2 = cord2
+                distance = abs(x2-x1) + abs(y2-y1)
+                distances[i].append((distance, i, j))
+            distances[i].sort(reverse=True)
+        
+        result = [None]*len(workers)
+        used_bikes = set()
+        queue = [distances[i].pop() for i in range(len(workers))]
+        heapq.heapify(queue)
+        while len(used_bikes) < len(workers):
+            _, worker, bike = heapq.heappop(queue)
+            if bike not in used_bikes:
+                result[worker] = bike
+                used_bikes.add(bike)
+            else:
+                heapq.heappush(queue, distances[worker].pop())
+        return result

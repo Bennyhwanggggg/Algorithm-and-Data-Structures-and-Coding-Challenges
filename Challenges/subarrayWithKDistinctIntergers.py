@@ -93,3 +93,24 @@ class Solution:
                     start_k += 1
                 res += start_k - start + 1
         return res
+
+# cleaner ver
+class Solution:
+    def subarraysWithKDistinct(self, A: List[int], K: int) -> int:
+        freq = dict()
+        start, start_k = 0, 0
+        res = 0
+        for idx, n in enumerate(A):
+            freq[n] = freq.get(n, 0) + 1
+            while len(freq) > K:
+                freq[A[start_k]] -= 1
+                if freq[A[start_k]] == 0:
+                    del freq[A[start_k]]
+                start_k += 1
+                start = start_k
+            if len(freq) == K:
+                while freq[A[start_k]] > 1:
+                    freq[A[start_k]] -= 1
+                    start_k += 1
+                res += start_k - start + 1
+        return res
