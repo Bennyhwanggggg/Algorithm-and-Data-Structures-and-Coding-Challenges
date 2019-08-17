@@ -42,3 +42,15 @@ class Solution:
             hold = max(hold, cash - prices[i])
         return cash
 
+# O(N) Space
+class Solution:
+    def maxProfit(self, prices: List[int], fee: int) -> int:
+        holding = [0]*len(prices)
+        cash = [0]*len(prices)
+        holding[0] = -prices[0]
+        
+        for i in range(1, len(prices)):
+            cash[i] = max(cash[i-1], prices[i] + holding[i-1] - fee)
+            holding[i] = max(holding[i-1], cash[i-1] - prices[i])
+        
+        return cash[-1]
