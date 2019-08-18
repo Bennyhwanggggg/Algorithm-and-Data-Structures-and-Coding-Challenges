@@ -50,6 +50,26 @@ class Solution:
                 break
         
         return ''.join(stack) or '0'
+
+# cleaner
+class Solution:
+    def removeKdigits(self, num: str, k: int) -> str:
+        stack = []
+        for idx in range(len(num)):
+            while stack and k > 0:
+                if stack[-1] > num[idx]:
+                    stack.pop()
+                    k -= 1
+                else:
+                    break
+            stack.append(num[idx])
+        
+        while k != 0:
+            stack.pop()
+            k -= 1
+        
+        return str(int(''.join(stack))) if ''.join(stack) else '0'
+
     
 """
 Another approach using heap similar to larget number subsequence with keeping track of index
