@@ -76,6 +76,40 @@ class Solution:
 
         return preLevel
 
+class Solution(object):
+    def findMinHeightTrees(self, n, edges):
+        """
+        :type n: int
+        :type edges: List[List[int]]
+        :rtype: List[int]
+        """
+        if n <= 2:
+            return [i for i in range(n)]
+        graph = collections.defaultdict(list)
+        indegrees = collections.defaultdict(int)
+        for u, v in edges:
+            graph[u].append(v)
+            graph[v].append(u)
+            indegrees[u] += 1
+            indegrees[v] += 1
+        
+        queue = []
+        
+        for i in range(n):
+            if indegrees[i] == 1:
+                queue.append(i)
+        
+        visited = set()
+        while len(visited) < max(n-2, 2):
+            temp = []
+            for node in queue:
+                visited.add(node)
+                for nei in graph[node]:
+                    indegrees[nei] -= 1
+                    if nei not in visited and indegrees[nei] == 1:
+                        temp.append(nei)
+            queue = temp
+        return queue
 
 """
 Longest Path

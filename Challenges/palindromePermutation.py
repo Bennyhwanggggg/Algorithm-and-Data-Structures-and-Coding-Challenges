@@ -22,6 +22,22 @@ HashMap
 Time: O(N)
 Space: O(N)
 """
+class Solution(object):
+    def canPermutePalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        counts = collections.Counter(s)
+        
+        odd_used = False
+        for ch in counts.keys():
+            if counts[ch]%2:
+                if len(s)%2 == 0 or odd_used:
+                    return False
+                odd_used = True
+        return True
+
 class Solution:
     def canPermutePalindrome(self, s: str) -> bool:
         counts = dict()
