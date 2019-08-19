@@ -14,7 +14,7 @@ Output: "dcbabcd"
 """
 
 """
-Lets take a string "abcbabcaba". Let us consider 2 pointers ii and jj. Initialize i = 0i=0. Iterate over jj from n-1n−1 to 00, incrementing ii each time s[i]==s[j]. Now, we just need to search in range [0,i). This way, we have reduced the size of string to search for the largest palindrome substring from the beginning. The range [0,i) must always contain the largest palindrome substring. The proof of correction is that: Say the string was a perfect palindrome, ii would be incremented nn times. Had there been other characters at the end, ii would still be incremented by the size of the palindrome. Hence, even though there is a chance that the range [0,i) is not always tight, it is ensured that it will always contain the longest palindrome from the beginning.
+Lets take a string "abcbabcaba". Let us consider 2 pointers ii and jj. Initialize i = 0. Iterate over jj from n-1 to 0, incrementing ii each time s[i]==s[j]. Now, we just need to search in range [0,i). This way, we have reduced the size of string to search for the largest palindrome substring from the beginning. The range [0,i) must always contain the largest palindrome substring. The proof of correction is that: Say the string was a perfect palindrome, ii would be incremented nn times. Had there been other characters at the end, ii would still be incremented by the size of the palindrome. Hence, even though there is a chance that the range [0,i) is not always tight, it is ensured that it will always contain the longest palindrome from the beginning.
 
 The best case for the algorithm is when the entire string is palindrome and the worst case is string like aababababababa", wherein ii first becomes 1212(check by doing on paper), and we need to recheck in [0,12) corresponding to string "aabababababa". Again continuing in the same way, we get i=10. In such a case, the string is reduced only by as few as 2 elements at each step. Hence, the number of steps in such cases is linear (n/2).
 
@@ -24,15 +24,24 @@ Algorithm
 
 The routine \text{shortestPalindrome}shortestPalindrome is recursive and takes string ss as parameter:
 
-Initialize i=0i=0
-Iterate over jj from n-1n−1 to 00:
-If s[i]==s[j], increase ii by 11
-If ii equals the size of ss, the entire string is palindrome, and hence return the entire string ss.
+Initialize i=0
+Iterate over j from n−1 to 00:
+If s[i]==s[j], increase i by 11
+If i equals the size of s, the entire string is palindrome, and hence return the entire string s.
 Else:
-Return reverse of remaining substring after ii to the end of string + \text{shortestPalindrome}shortestPalindrome routine on substring from start to index i-1i−1 + remaining substring after ii to the end of string.
+Return reverse of remaining substring after ii to the end of string + shortestPalindrome routine on substring from start to index i−1 + remaining substring after ii to the end of string.
 
 Time: O(n^2) Each iteration of shortestPalindrome is linear in size of substring and the maximum number of recursive calls can be n/2 times as shown in the Intuition section.
 Space: O(n) extra space for remaining string
+"""
+
+"""
+The Idea is simple, we use j to compare character from end of s and beginning of s. If it's equal, increment j by 1.
+
+So we can use j-len(s) to divide s in two parts. The first part is that we don't know it's Palindrome. The second part its that we know for sure its the suffix of result and it may need reversed and insert at beginning of result.
+
+The fun part is this: s[::-1][:len(s)-j]
+if len(s)-j is 0, it will eliminate as '', otherwise it equals reversed(s[j-len(s):])
 """
 class Solution:
     def shortestPalindrome(self, s: str) -> str:
