@@ -74,6 +74,34 @@ def getLeafSequence(root, curr):
 	rightRes = getLeafSequence(root.right, curr) if root.right else ''
 	return leftRes + rightRes
 
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def leafSimilar(self, root1: TreeNode, root2: TreeNode) -> bool:
+        return self.getsequence(root1) == self.getsequence(root2)
+        
+    def getsequence(self, node):
+        res = []
+        if not node:
+            return res
+        stack = [node]
+        while stack:
+            curr = stack.pop()
+            if not curr.left and not curr.right:
+                res.append(curr.val)
+            if curr.right:
+                stack.append(curr.right)
+            if curr.left:
+                stack.append(curr.left)
+        return res
+            
+
+
 if __name__ == '__main__':
 	rootA = TreeNode('xyz')
 	rootA.left = TreeNode('abcd')

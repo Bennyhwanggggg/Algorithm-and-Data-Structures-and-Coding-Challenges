@@ -94,5 +94,37 @@ class Solution:
                     seen.add(nei)
                     queue.append(nei)
         
-                
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def findClosestLeaf(self, root: TreeNode, k: int) -> int:
+        graph = collections.defaultdict(list)
+        
+        def dfs(node, parent=None):
+            if not node:
+                return
+            graph[node].append(parent)
+            graph[parent].append(node)
+            dfs(node.left, node)
+            dfs(node.right, node)
+        
+        dfs(root)
+        seen = set()
+        queue = collections.deque([node for node in graph if node and node.val == k])
+        while queue:
+            node = queue.popleft()
+            seen.add(node)
+            if not node:
+                continue
+            if len(graph[node]) <= 1:
+                return node.val
+            for nei in graph[node]:
+                if nei not in seen:
+                    queue.append(nei)                
 

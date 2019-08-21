@@ -22,9 +22,9 @@ The integer n is in the range [0, 100].
 """
 
 """
-To do so, firstly, we put only those elements from mapmap into the queuequeue which have non-zero number of instances. Then, we start picking up the largest task from the queuequeue for current execution. (Again, at every instant, we update the current timetime as well.) We pop this element from the queuequeue. We also decrement its pending number of instances and if any more instances of the current task are pending, we store them(count) in a temporary temp list, to be added later on back into the queuequeue. We keep on doing so, till a cycle of cooling time has been finished. After every such cycle, we add the generated temp list back to the queuequeue for considering the most critical task again.
+To do so, firstly, we put only those elements from map into the queue which have non-zero number of instances. Then, we start picking up the largest task from the queue for current execution. (Again, at every instant, we update the current time as well.) We pop this element from the queue. We also decrement its pending number of instances and if any more instances of the current task are pending, we store them(count) in a temporary temp list, to be added later on back into the queue. We keep on doing so, till a cycle of cooling time has been finished. After every such cycle, we add the generated temp list back to the queue for considering the most critical task again.
 
-We keep on doing so till the queuequeue(and temo) become totally empty. At this instant, the current value of timetime gives the required result.
+We keep on doing so till the queue(and temp) become totally empty. At this instant, the current value of timetime gives the required result.
 
 This is an extremely tricky problem.
 The main idea is to schedule the most frequent tasks as frequently as possible. Begin with scheduling the most frequent task. Then cool-off for n, and in that cool-off period schedule tasks in order of frequency, or if no tasks are available, then be idle.
