@@ -22,7 +22,7 @@ Algorithm
 This method relies on the fact that the longest increasing subsequence possible upto the ith
  index in a given array is independent of the elements coming later on in the array. Thus, if we know the length of the LIS upto ith index, we can figure out the length of the LIS possible by including the (i+1)th element based on the elements with indices j such that 0≤j≤(i+1).
 
-We make use of a dpdp array to store the required data. dp[i]dp[i] represents the length of the longest increasing subsequence possible considering the array elements upto the ith index only, by necessarily including the ith element. In order to find out dp[i], we need to try to append the current element(nums[i]nums[i]) in every possible increasing subsequences upto the (i−1)th index(including the (i−1)th index), such that the new sequence formed by adding the current element is also an increasing subsequence. Thus, we can easily determine dp[i] using:
+We make use of a dp array to store the required data. dp[i] represents the length of the longest increasing subsequence possible considering the array elements upto the ith index only, by necessarily including the ith element. In order to find out dp[i], we need to try to append the current element(nums[i]nums[i]) in every possible increasing subsequences upto the (i−1)th index(including the (i−1)th index), such that the new sequence formed by adding the current element is also an increasing subsequence. Thus, we can easily determine dp[i] using:
 dp[i]=max(dp[j])+1,∀0≤j<i
 
 At the end, the maximum out of all the dp[i]'s to determine the final result.
