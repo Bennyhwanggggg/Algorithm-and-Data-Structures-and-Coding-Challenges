@@ -45,6 +45,27 @@ def splitStringToFormPalindrome(A, B):
 def check(A, B):
 	return splitStringToFormPalindrome(A, B) or splitStringToFormPalindrome(B, A)
 
+# if need to return index
+
+def splitToPalindrome(A, B):
+    """
+    Two pointers, iterate till not match and check remaining if its palindrome or not
+    """
+    i, j = 0, len(A)-1 
+    while i <= j: # i = 2, j = 3
+        if A[i] == B[j]:
+            i += 1
+            j -= 1
+        else:
+            if A[i:j+1] == A[i:j+1][::-1]: # A[i:j+1] =cc
+                return j+1
+            elif B[i:j+1] == B[i:j+1][::-1]:
+                return i
+            else:
+                return -1
+    return i
+
+
 if __name__ == '__main__':
 	assert check('abcgggg', 'xxxbcba') == True
 	assert check('adbbbb', 'xxbcba') == False
