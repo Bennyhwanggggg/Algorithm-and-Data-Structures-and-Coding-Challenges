@@ -110,3 +110,40 @@ class Solution(object):
                 all_combo_dict[intermediate_word] = []
         return 0
 
+
+# bidrectional BFS
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+        if endWord not in wordList or not endWord or not beginWord or not wordList:
+            return 0
+        self.graph = collections.defaultdict(list)
+        
+        for word in wordList:
+            for i in range(len(word)):
+                self.graph[word[:i] + '*' + word[i+1:]].append(word)
+
+        queue_begin = collections.deque([(beginWord, 1)])
+        queue_end = collections.deque([(endWord, 1)])
+        visited_begin = {beginWord: 1}
+        visited_end = {endWord: 1}
+        ans = None
+        while queue_begin and queue_end:
+            ans = self.visitNode(queue_begin, visited_begin, visited_end)
+            if ans:
+                return ans
+            ans = self.visitNode(queue_end, visited_end, visited_begin)
+            if ans:
+                return ans    
+        return 0
+    
+    def visitNode(self, queue, visited, other_visited):
+        curr, count = queue.popleft()
+        for i in range(len(curr)):
+            curr_key = curr[:i] + "*" + curr[i+1:]
+            for nei in self.graph[curr_key]:
+                if nei in other_visited:
+                    return count + other_visited[nei]
+                if nei not in visited:
+                    visited[nei] = count + 1
+                    queue.append((nei, count+1))
+        return None

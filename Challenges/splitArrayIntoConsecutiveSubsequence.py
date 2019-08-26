@@ -60,16 +60,16 @@ class Solution:
         count = collections.Counter(nums)
         tails = collections.Counter()
         for x in nums:
-            if count[x] == 0:
+            if count[x] == 0: # if all used
                 continue
-            elif tails[x] > 0:
-                tails[x] -= 1
-                tails[x+1] += 1
-            elif count[x+1] > 0 and count[x+2] > 0:
+            elif tails[x] > 0: # adding to a new chain 
+                tails[x] -= 1 # one ending at current has ended
+                tails[x+1] += 1 # next number ending increase by 1
+            elif count[x+1] > 0 and count[x+2] > 0: # if starting a new chain
                 count[x+1] -= 1
                 count[x+2] -= 1
                 tails[x+3] += 1
-            else:
+            else: # if cannot start a new chain and no existing chain to add to
                 return False
             count[x] -= 1
         return True
