@@ -43,3 +43,18 @@ class Solution:
             
         return times
 
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+        
+        last, curr = 0, 0
+        res = 0
+        i = 0
+        while curr < len(nums)-1:
+            while i <= last:
+                curr = max(curr, i+nums[i])
+                i += 1
+            if last == curr:
+                return -1
+            last = curr
+            res += 1
+        return res

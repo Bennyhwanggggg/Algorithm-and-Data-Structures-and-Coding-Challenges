@@ -38,3 +38,21 @@ class Solution:
         
         return water
 
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        
+        res = 0
+        arrLeft = []
+        currLeft = 0
+        
+        for i in range(1, len(height)):
+            currLeft = max(currLeft, height[i-1])
+            arrLeft.append(currLeft)
+        
+        currRight = 0
+        for i in range(len(height)-2, -1, -1):
+            currRight = max(currRight, height[i+1])
+            res += max(min(arrLeft[i], currRight) - height[i], 0)
+        
+        return res
+        
