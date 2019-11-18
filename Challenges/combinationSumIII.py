@@ -75,3 +75,20 @@ class Solution:
         res = []
         dfs(res, k, nums, n, [], 0)
         return res
+
+class Solution:
+    def combinationSum3(self, k: int, n: int) -> List[List[int]]:
+        
+        res = []
+        
+        def backtracking(nums, curr, remain):
+            if len(curr) == k:
+                if remain == 0:
+                    res.append(curr)
+                return
+            
+            for idx, n in enumerate(nums):
+                backtracking(nums[idx+1:], curr + [n], remain - n)
+        
+        backtracking([i for i in range(1, 10)], [], n)
+        return res

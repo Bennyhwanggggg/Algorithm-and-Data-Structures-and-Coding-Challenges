@@ -69,3 +69,22 @@ class Solution:
             i += 1
 
         return res
+
+# two pointers for clarity
+class Solution:
+    def summaryRanges(self, nums: List[int]) -> List[str]:
+        res = []
+        if len(nums) == 0:
+            return res
+        
+        left, right = 0, 0
+        while right < len(nums):
+            while right+1 < len(nums) and nums[right+1]-nums[right] == 1:
+                right += 1
+            if left == right:
+                res.append(str(nums[left]))
+            else:
+                res.append('{}->{}'.format(nums[left], nums[right]))
+            right += 1
+            left = right
+        return res
