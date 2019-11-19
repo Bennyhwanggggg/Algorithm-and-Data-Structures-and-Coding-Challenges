@@ -94,3 +94,42 @@ class Solution:
         dfs(root)
         return self.res        
 
+
+"""
+Same as first one, from top to bottom and terminate at first bst found
+
+Apprently fastest runtime
+"""
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def largestBSTSubtree(self, root: TreeNode) -> int:
+        
+        def isBST(root):
+            if not root:
+                return 0
+            return isBSTHelper(root, -float('inf'), float('inf'))
+        
+        def isBSTHelper(node, left, right):
+            if not node:
+                return 0
+            if left >= node.val or right <= node.val:
+                return -1
+            left = isBSTHelper(node.left, left, node.val)
+            right = isBSTHelper(node.right, node.val, right)
+            if left < 0 or right < 0:
+                return -1
+            return left + right + 1
+        self.res = 0
+        if not root:
+            return 0
+        count = isBST(root)
+        if count >= 0:
+            return count
+        return max(self.largestBSTSubtree(root.left), self.largestBSTSubtree(root.right))
+            
