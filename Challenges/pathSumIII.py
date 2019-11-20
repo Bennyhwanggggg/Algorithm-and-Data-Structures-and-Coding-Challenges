@@ -87,3 +87,47 @@ class Solution(object):
         self.helper(root, sum, 0, {0:1})
         return self.result
 
+"""
+High level walk through
+In order to optimize from the brutal force solution, we will have to think of a clear way to memorize the intermediate result. Namely in the brutal force solution, we did a lot repeated calculation. For example 1->3->5, we calculated: 1, 1+3, 1+3+5, 3, 3+5, 5.
+This is a classical 'space and time tradeoff': we can create a dictionary (named cache) which saves all the path sum (from root to current node) and their frequency.
+Again, we traverse through the tree, at each node, we can get the currPathSum (from root to current node). If within this path, there is a valid solution, then there must be a oldPathSum such that currPathSum - oldPathSum = target.
+We just need to add the frequency of the oldPathSum to the result.
+During the DFS break down, we need to -1 in cache[currPathSum], because this path is not available in later traverse.
+Check the graph below for easy visualization.
+image
+2.2 Complexity analysis:
+2.2.1 Space complexity
+O(n) extra space
+
+2.2.1 Time complexity
+O(n) as we just traverse once
+"""
+class Solution(object):
+    def pathSum(self, root, target):
+        # define global result and path
+        self.result = 0
+        cache = {0:1}
+        
+        # recursive to get result
+        self.dfs(root, target, 0, cache)
+        
+        # return result
+        return self.result
+    
+    def dfs(self, root, target, currPathSum, cache):
+        # exit condition
+        if root is None:
+            return  
+        # calculate currPathSum and required oldPathSum
+        currPathSum += root.val
+        oldPathSum = currPathSum - target
+        # update result and cache
+        self.result += cache.get(oldPathSum, 0)
+        cache[currPathSum] = cache.get(currPathSum, 0) + 1
+        
+        # dfs breakdown
+        self.dfs(root.left, target, currPathSum, cache)
+        self.dfs(root.right, target, currPathSum, cache)
+        # when move to a different branch, the currPathSum is no longer available, hence remove one. 
+        cache[currPathSum] -= 1
