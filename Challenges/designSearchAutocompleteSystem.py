@@ -113,3 +113,75 @@ class AutocompleteSystem(object):
 # obj = AutocompleteSystem(sentences, times)
 # param_1 = obj.input(c)
 
+
+
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.freq = 0
+        self.word = None
+
+class AutocompleteSystem(object):
+
+    def __init__(self, sentences, times):
+        """
+        :type sentences: List[str]
+        :type times: List[int]
+        """
+        self.root = TrieNode()
+        self.prefix = ''
+        for sentence, time in zip(sentences, times):
+            self.insert(sentence, time)
+
+    def input(self, c):
+        """
+        :type c: str
+        :rtype: List[str]
+        """
+        res = []
+        if c == '#':
+            self.insert(self.prefix, 1)
+            self.prefix = ''
+            return res
+        else:
+            self.prefix += c
+            temp = self.search(self.prefix)
+            
+            # bfs to get the words with the prefix
+            queue = collections.deque()
+            if temp is not None:
+                queue.append(temp)
+            while queue:
+                curr = queue.popleft()
+                if curr.word is not None:
+                    res.append((curr.freq, curr.word))
+                for key, item in curr.children.items():
+                    queue.append(item)
+            result = heapq.nsmallest(3, res, key = lambda x:(-x[0], x[1]))
+            return [word[1] for word in result]
+        
+    def search(self, word):  # dfs
+        curr = self.root
+        for char in word:
+            node = curr.children.get(char, None)
+            if node is None:
+                return None
+            curr = node
+        return curr
+    
+    def insert(self, word, time):
+        curr = self.root
+        for char in word:
+            node = curr.children.get(char, None)
+            if node is None:  # if the character node doesn't exist, we add it
+                node = TrieNode()
+                curr.children[char] = node
+            curr = node
+        curr.freq += time
+        curr.word = word
+        
+
+
+# Your AutocompleteSystem object will be instantiated and called as such:
+# obj = AutocompleteSystem(sentences, times)
+# param_1 = obj.input(c)

@@ -56,3 +56,25 @@ class Solution(object):
             traverse(node.right)
         traverse(root)
         return self.exist
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def findTarget(self, root: TreeNode, k: int) -> bool:
+        
+        self.seen = set()
+        
+        def dfs(node):
+            if not node:
+                return False
+            if k - node.val in self.seen:
+                return True
+            self.seen.add(node.val)
+            return dfs(node.left) or dfs(node.right)
+        
+        return dfs(root)

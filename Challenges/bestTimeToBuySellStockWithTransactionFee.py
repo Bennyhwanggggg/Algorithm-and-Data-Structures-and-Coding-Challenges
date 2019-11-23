@@ -54,3 +54,18 @@ class Solution:
             holding[i] = max(holding[i-1], cash[i-1] - prices[i])
         
         return cash[-1]
+
+class Solution:
+    def maxProfit(self, prices: List[int], fee: int) -> int:
+        if len(prices) < 2:
+            return 0
+        
+        buy = [0]*len(prices)
+        sell = [0]*len(prices)
+        buy[0] = -prices[0]
+        
+        for i in range(1, len(prices)):
+            buy[i] = max(sell[i-1]-prices[i], buy[i-1])
+            sell[i] = max(prices[i]+buy[i-1]-fee, sell[i-1])
+        
+        return sell[-1]
