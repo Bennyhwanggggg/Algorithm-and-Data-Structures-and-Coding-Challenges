@@ -32,6 +32,10 @@ str1[i] and str2[i] are English uppercase letters.
 Time & space: O(n ^ 2)
 due to slicing
 
+
+If longer string starts with shorter string, cut off the common prefix part of the longer string; repeat till one is empty, then the other is gcd string;
+If the longer string does NOT start with the shorter one, there is no gcd string.
+
 can reduce to O(n1 + n2)
 """
 class Solution(object):
