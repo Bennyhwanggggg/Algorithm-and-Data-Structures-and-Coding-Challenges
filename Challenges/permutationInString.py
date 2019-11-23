@@ -65,4 +65,26 @@ class Solution:
             
         return ctr2 == ctr1
                 
-
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        if len(s1) > len(s2):
+            return False
+        
+        counts1 = collections.Counter(s1)
+        counts2 = collections.Counter(s2[:len(s1)])
+        i, j = 0, len(s1)
+        
+        while j < len(s2):
+            if counts1 == counts2:
+                return True
+            counts2[s2[i]] -= 1
+            
+            if counts2[s2[i]] == 0:
+                counts2.pop(s2[i])
+            
+            counts2[s2[j]] = counts2.get(s2[j], 0) + 1
+            
+            i += 1
+            j += 1
+        
+        return counts1 == counts2
