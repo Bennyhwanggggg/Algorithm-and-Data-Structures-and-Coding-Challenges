@@ -56,3 +56,17 @@ class Solution:
         
         return [(x,y) for (dist,x, y) in heap]
 
+
+class Solution:
+    def kClosest(self, points: List[List[int]], K: int) -> List[List[int]]:
+        
+        pq = []
+        for x, y in points:
+            dist = x*x + y*y
+            heapq.heappush(pq, (-dist, x, y))
+            if len(pq) > K:
+                heapq.heappop(pq)
+        
+        return [[x, y] for _, x, y in pq]
+
+
