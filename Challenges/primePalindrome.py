@@ -34,6 +34,8 @@ The answer is guaranteed to exist and be less than 2 * 10^8.
 """
 
 """
+construct palindromes first and then check if prime
+
 Time: O(N)
 """
 class Solution:
@@ -71,3 +73,40 @@ class Solution:
                 return False
         return True
 
+
+
+class Solution:
+    def primePalindrome(self, N: int) -> int:
+        ndigits = len(str(N))
+        if N == 1:
+            return 2
+        if N <=3:
+            return N
+        elif N <= 5:
+            return 5
+        elif N <= 7:
+            return 7
+        elif N <= 11:
+            return 11
+        while True:
+            for x in self.palindromes(ndigits):
+                if x >= N and self.isPrime(x) :
+                    return x
+            ndigits+=1
+
+    def palindromes(self, n):
+        l = n // 2
+        for i in range(10**(l-1), 10**l):
+            s = str(i)
+            for j in range(10):
+                yield int(s + str(j) +  s[::-1])
+
+    def isPrime(self, x):
+        if x == 1:
+            return False
+        if x == 2:
+            return True
+        for i in range(2, int(x**0.5+1)):
+            if x % i == 0:
+                return False
+        return True
