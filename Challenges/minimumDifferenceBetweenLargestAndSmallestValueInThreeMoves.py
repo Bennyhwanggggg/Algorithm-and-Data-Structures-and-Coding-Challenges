@@ -50,12 +50,12 @@ class Solution:
         '''
         First, we eliminate the simple case of arrays with less than 5 elements. If an array has less than 5 elements, we can change all the elements to match. For example [1,2,3,4] could be changed to [1,1,1,1]. Thus any array with less than 5 elements will always return 0.
 
-Next, we sort the array. With a sorted array, there are 4 distinct solution possibliltes.
+        Next, we sort the array. With a sorted array, there are 4 distinct solution possibliltes.
 
-The three highest numbers need to be changed changed. An example of this would be [2,3,4,35,46,78,88]. Assuming we remove the 3 highest, the solution of our minimum will be the 4th highest minus the lowest. In the code below, this is expressed as nums[l-4] - nums[0]
-The second use case is elminating two high numbers and one low number. An example would be [1,33,34,35,65,67]. In this case, we change the two highest and the lowest, meaning we subtract the 3rd largest number from the second smallest number: nums[l-3] - nums[1
-Th third case is removing the highest number and the two smallest numbers. Ex. [1,2,33,34,35,71]. Expressed as nums[l-2]-nums[2]
-Finally, the fourth case involves elminating the three smallest numbers. Ex. [1,2,3,96,97,98,99]. Expressed as nums[l-1]-nums[3]
+       The three highest numbers need to be changed changed. An example of this would be [2,3,4,35,46,78,88]. Assuming we remove the 3 highest, the solution of our minimum will be the 4th highest minus the lowest. In the code below, this is expressed as nums[l-4] - nums[0]
+       The second use case is elminating two high numbers and one low number. An example would be [1,33,34,35,65,67]. In this case, we change the two highest and the lowest, meaning we subtract the 3rd largest number from the second smallest number: nums[l-3] - nums[1
+       The third case is removing the highest number and the two smallest numbers. Ex. [1,2,33,34,35,71]. Expressed as nums[l-2]-nums[2]
+       Finally, the fourth case involves elminating the three smallest numbers. Ex. [1,2,3,96,97,98,99]. Expressed as nums[l-1]-nums[3]
 
         '''
         l = len(nums)
