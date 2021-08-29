@@ -43,3 +43,19 @@ class Solution:
             return (0, rest, _id) if rest[0].isalpha() else (1, )
 
         return sorted(logs, key=get_key)
+
+class Solution:
+    def reorderLogFiles(self, logs: List[str]) -> List[str]:
+        def func(x,y):
+            if x[1].isdigit() or y[1].isdigit():
+                return 1 if x[1].isdigit() else -1 # digits always come after letters
+            for i in range(1, min(len(x), len(y))):
+                if x[i] != y[i]:
+                    return 1 if x[i] > y[i] else -1 # sort logs lexicographically by contents
+            if len(x) != len(y):
+                return len(x)-len(y) # if contents are the same but different length, return the longer one
+            return 1 if x[0] > y[0] else -1 # if contents are the same, sort by key
+            
+        logs = [log.split(' ') for log in logs] # split by space
+        logs = sorted(logs, key=cmp_to_key(func)) # sort using custom function
+		return [' '.join(log) for log in logs]  # return original strings
