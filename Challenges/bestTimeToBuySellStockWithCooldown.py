@@ -21,11 +21,15 @@ dp(n, 1) -> The max profix we get on day n, if we buy on day n.
 dp(n, 2) -> The max profix we get on day n, if we sell on day n.
 Below is the state transition function
 
-dp(n, 0) = max{ dp(n-1, 1), dp(n-1, 0), dp(n-1, 2) }, if we rest on day n, we do not really care about what we have done on day n-1, you can do whatever you want, and we just take the max profit from day n-1
-dp(n, 1) = dp[n-1][0] - prices[n], if we buy on day n, we cannot buy on day n-1, because double-buy is by natural disallowed in the "Stock" Series. We cannot sell on day n-1, because of the new cool-down policy. So in day n-1, we can only rest.
-dp(n, 2) = max {dp(0, 1), dp(1, 1), ...., dp(n-1, 1)} + prices[n], if we sell on day n, we need to make sure we buy the stock before in one of (0...n-1). For example, if you rest on the first 2 days, there is NOTHING for you to sell on the 3rd day. Among all the possible "buy-day", we pick the one with max-profix
+dp(n, 0) = max{ dp(n-1, 1), dp(n-1, 0), dp(n-1, 2) }, if we rest on day n, we do not really care about what we have done on day n-1, 
+you can do whatever you want, and we just take the max profit from day n-1
+dp(n, 1) = dp[n-1][0] - prices[n], if we buy on day n, we cannot buy on day n-1, because double-buy is by natural disallowed in the "Stock" Series.
+We cannot sell on day n-1, because of the new cool-down policy. So in day n-1, we can only rest.
+dp(n, 2) = max {dp(0, 1), dp(1, 1), ...., dp(n-1, 1)} + prices[n], if we sell on day n, we need to make sure we buy the stock before in one of (0...n-1).
+For example, if you rest on the first 2 days, there is NOTHING for you to sell on the 3rd day. Among all the possible "buy-day", we pick the one with max-profix
 
-Now, you might think: hmmmm, this is an O(N^2) DP because of 3., we need to get max from a list of values in each iteration. Not really, you can keep track of the max of the past dp(n, 1). In the following solution, I use the var bought to keep track.
+Now, you might think: hmmmm, this is an O(N^2) DP because of 3., we need to get max from a list of values in each iteration. Not really, 
+you can keep track of the max of the past dp(n, 1). In the following solution, I use the var bought to keep track.
 """
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
